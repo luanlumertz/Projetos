@@ -1,0 +1,3 @@
+- Criei o componente footer.tsx e integrei no page.tsx.
+- Criei o componente header.tsx, onde o themetoggle vai morar, que por sua vez adicionei icones e trraduzi o dropdown menu.
+- Criei um subComponente dentro do header.tsx chamado CartSidebar onde o shadcn implementa um menu lateral para finalizar a compra.
