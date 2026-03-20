@@ -120,14 +120,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
-  html body button:not(:disabled), 
-  html body [role="button"]:not(:disabled) {
+
+  html body button:not(:disabled):not(.cursor-not-allowed),
+  html body [role="button"]:not(:disabled):not(.cursor-not-allowed) {
     cursor: pointer !important;
   }
 }

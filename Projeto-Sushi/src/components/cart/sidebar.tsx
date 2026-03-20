@@ -2,15 +2,28 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import { useCartStore } from "@/stores/cart-store";
+import { CartItem } from "./item";
 
 export const CartSidebar = () => {
+    const { cart } = useCartStore(state => state)
+
+    // faz um loop por todos os itens do carrinho e multiplica pelo seu respectivo valor
+    let subtotal = 0
+    for (let item of cart) {
+        subtotal += item.quantity * item.product.price
+    }
+
     return (
         <Sheet>
             <SheetTrigger asChild>
                 {/* Ação que vai fazer abrir o menu lateral atraves de um botão com um ícone */}
-                <Button>
+                <Button className="relative">
                     <ShoppingCart />
                     <p>Carrinho</p>
+                    {cart.length > 0 &&
+                        <div className="absolute size-3 bg-red-600 rounded-full -right-1 -top-1"></div>
+                    }
                 </Button>
             </SheetTrigger>
             <SheetContent>
@@ -21,12 +34,14 @@ export const CartSidebar = () => {
                         "Este é o seu carrinho de compras, onde você pode revisar os itens antes de finalizar a compra."
                     </SheetDescription>
                 </SheetHeader>
-                
+
                 {/* E aqui começa o conteúdo desse menu */}
                 <div className="px-4">
-                    {/* Itens que foram adicionado ao carrinho */}
+                    {/* Itens que foram adicionado ao carrinho passando o item para outro componente renderizar a imagem e suas informações atráves de cart, fornecido pelo hook do zustand src > stores > cart-store.ts */}
                     <div className="flex flex-col gap-4 mb-3">
-                        ...
+                        {cart.map(item => (
+                            <CartItem key={item.product.id} item={item} />
+                        ))}
                     </div>
 
                     <Separator className="my-4" />
@@ -34,14 +49,17 @@ export const CartSidebar = () => {
                     {/* Valor da compra */}
                     <div className="flex justify-between items-center text-xs">
                         <div>Subtotal</div>
-                        <div>...</div>
+                        <div>R$ {subtotal.toFixed(2).replace('.', ',')}</div>
                     </div>
 
                     <Separator className="my-4" />
 
                     {/* Botão para finalizar compra */}
                     <div className="text-center">
-                        <Button>Fizalizar Compra</Button>
+                        <Button
+                            disabled={cart.length === 0}
+                            className="disabled:cursor-not-allowed"
+                        >Fizalizar Compra</Button>
                     </div>
                 </div>
             </SheetContent>

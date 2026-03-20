@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic"
 import { Logo } from "@/components/logo"
 
+// Alteração feita pelo copilot para solucionar erros de Hydratation
 const ThemeToggle = dynamic(
   () => import("@/components/theme-toggle").then((mod) => mod.ThemeToggle),
   {
@@ -16,6 +17,7 @@ const CartSidebar = dynamic(
     ssr: false,
   }
 )
+// Fim das alterações do copilot.
 
 export const Header = () => {
     return (
