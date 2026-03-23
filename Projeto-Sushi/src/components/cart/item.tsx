@@ -1,5 +1,5 @@
 import { Cart } from "@/types/cart"
-import { CartItemQuantity } from "./item-quantity"
+import { CartItemQuantity } from "@/components/cart/item-quantity"
 
 type Props = {
     item: Cart

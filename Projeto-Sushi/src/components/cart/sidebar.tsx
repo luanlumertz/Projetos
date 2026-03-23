@@ -3,9 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { useCartStore } from "@/stores/cart-store";
-import { CartItem } from "./item";
+import { CartItem } from "@/components/cart/item";
+import { useState } from "react";
+import { CheckoutDialog } from "@/components/checkout/dialog";
 
 export const CartSidebar = () => {
+    // checkoutOpen é responsável por mostrar o modal de confirmação de compra
+    const [checkoutOpen, setCheckoutOpen] = useState(false)
     const { cart } = useCartStore(state => state)
 
     // faz um loop por todos os itens do carrinho e multiplica pelo seu respectivo valor
@@ -26,7 +30,7 @@ export const CartSidebar = () => {
                     }
                 </Button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className="overflow-y-auto">
                 {/* Aqui fica o cabeçalho desse menu lateral*/}
                 <SheetHeader className="pb-0">
                     <SheetTitle>Carrinho</SheetTitle>
@@ -59,9 +63,16 @@ export const CartSidebar = () => {
                         <Button
                             disabled={cart.length === 0}
                             className="disabled:cursor-not-allowed"
+                            onClick={() => setCheckoutOpen(true)}
                         >Fizalizar Compra</Button>
                     </div>
                 </div>
+
+                {/* Chama o componente para finalizar compra dialog.tsx qunado o botão finalizar compra é clicado */}
+                <CheckoutDialog  
+                    open={checkoutOpen}
+                    onOpenChange={setCheckoutOpen}
+                />
             </SheetContent>
         </Sheet>
     )

@@ -24,9 +24,9 @@ export const Header = () => {
         <header className="flex justify-between items-center p-4">
             <div className="flex items-center gap-3">
                 <Logo />
-                <ThemeToggle />
             </div>
             <div className="flex items-center gap-3">
+                <ThemeToggle />
                 {/* É responsável por mostrar o menu lateral qunado clicado em carrinho */}
                 <CartSidebar />
             </div>
